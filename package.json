@@ -1,11 +1,12 @@
 {
   "name": "generador-textos-whatsapp",
-  "version": "1.0.0",
-  "description": "Generador automático de textos para canal de WhatsApp sobre deportes, cine, series e IPTV",
+  "version": "2.0.0",
+  "description": "Generador automático de textos para canal de WhatsApp sobre deportes, cine, series e IPTV con fuentes reales",
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
-    "generate": "node main.js"
+    "generate": "node main.js",
+    "install-deps": "npm install"
   },
   "keywords": [
     "whatsapp",
@@ -13,9 +14,16 @@
     "textos",
     "deportes",
     "cine",
-    "series"
+    "series",
+    "noticias",
+    "rss"
   ],
   "author": "",
   "license": "MIT",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "rss-parser": "^3.13.0",
+    "dotenv": "^16.3.1"
+  }
 }

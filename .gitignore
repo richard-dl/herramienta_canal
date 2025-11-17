@@ -1,6 +1,9 @@
 # Node modules
 node_modules/
 
+# Variables de entorno (contienen API keys)
+.env
+
 # Archivos generados
 output/*.txt
 

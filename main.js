@@ -6,6 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { generarTextosVariados } from './src/generador.js';
+import { generarTextosReales } from './src/generadorReal.js';
 import { formatearOutput, obtenerFechaActual, separador } from './src/utils/formatter.js';
 
 // Obtener __dirname en módulos ES
@@ -28,7 +29,7 @@ function asegurarCarpetaOutput() {
 /**
  * Guarda los textos en un archivo
  */
-function guardarEnArchivo(textos) {
+function guardarEnArchivo(textos, usandoFuentesReales = false) {
   const fecha = new Date();
   const timestamp = fecha.toISOString().replace(/[:.]/g, '-').split('T')[0];
   const hora = fecha.toTimeString().split(' ')[0].replace(/:/g, '-');
@@ -38,13 +39,24 @@ function guardarEnArchivo(textos) {
   let contenido = `${'='.repeat(70)}\n`;
   contenido += `  TEXTOS GENERADOS PARA CANAL DE WHATSAPP\n`;
   contenido += `  Fecha: ${obtenerFechaActual()}\n`;
+  contenido += `  Modo: ${usandoFuentesReales ? 'FUENTES REALES (RSS/APIs)' : 'SINTÉTICO'}\n`;
   contenido += `${'='.repeat(70)}\n\n`;
 
   textos.forEach((item, index) => {
     contenido += `${'─'.repeat(70)}\n`;
     contenido += `TEXTO #${index + 1} - TEMA: ${item.tema}\n`;
+    if (item.fuente) {
+      contenido += `FUENTE: ${item.fuente}\n`;
+    }
+    if (item.esReal !== undefined) {
+      contenido += `TIPO: ${item.esReal ? '✓ Noticia Real' : '⚠ Generado Sintéticamente'}\n`;
+    }
     contenido += `${'─'.repeat(70)}\n`;
-    contenido += `${item.texto}\n\n`;
+    contenido += `${item.texto}\n`;
+    if (item.link) {
+      contenido += `\nLink: ${item.link}\n`;
+    }
+    contenido += `\n`;
   });
 
   contenido += `${'='.repeat(70)}\n`;
@@ -59,31 +71,44 @@ function guardarEnArchivo(textos) {
 /**
  * Función principal
  */
-function main() {
+async function main() {
   console.log('\n');
   console.log('╔════════════════════════════════════════════════════════════╗');
   console.log('║   GENERADOR DE TEXTOS PARA CANAL DE WHATSAPP              ║');
+  console.log('║          CON FUENTES REALES (RSS + APIs)                  ║');
   console.log('╚════════════════════════════════════════════════════════════╝');
   console.log('\n');
 
   console.log(`📅 Fecha: ${obtenerFechaActual()}`);
-  console.log(`🎯 Generando ${CANTIDAD_TEXTOS} textos...`);
+  console.log(`🎯 Generando ${CANTIDAD_TEXTOS} textos desde fuentes reales...`);
   console.log('\n');
 
   try {
     // Asegurar carpeta de salida
     asegurarCarpetaOutput();
 
-    // Generar textos
-    const textos = generarTextosVariados(CANTIDAD_TEXTOS);
+    // Generar textos desde fuentes reales
+    const textos = await generarTextosReales(CANTIDAD_TEXTOS);
+
+    console.log('\n' + '═'.repeat(60) + '\n');
 
     // Mostrar en consola
     textos.forEach((item, index) => {
       console.log(formatearOutput(index + 1, item.tema, item.texto));
+
+      // Mostrar info de fuente
+      if (item.fuente) {
+        console.log(`   📰 Fuente: ${item.fuente}`);
+      }
+      if (item.esReal !== undefined) {
+        const tipo = item.esReal ? '✓ Noticia Real' : '⚠ Generado Sintéticamente';
+        console.log(`   📌 Tipo: ${tipo}`);
+      }
+      console.log('');
     });
 
     // Guardar en archivo
-    const nombreArchivo = guardarEnArchivo(textos);
+    const nombreArchivo = guardarEnArchivo(textos, true);
 
     console.log('✅ TEXTOS GENERADOS EXITOSAMENTE\n');
     console.log(`💾 Guardado en: output/${nombreArchivo}\n`);
@@ -92,6 +117,7 @@ function main() {
 
   } catch (error) {
     console.error('\n❌ ERROR:', error.message);
+    console.error(error);
     console.error('\n');
     process.exit(1);
   }

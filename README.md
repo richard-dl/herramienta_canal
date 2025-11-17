@@ -1,38 +1,79 @@
-# Generador de Textos para Canal de WhatsApp
+# Generador de Textos para Canal de WhatsApp (CON FUENTES REALES)
 
-Herramienta automática para generar textos originales y atractivos estilo "publicación de canal de WhatsApp" sobre diversas temáticas.
+Herramienta automática que genera textos originales y atractivos estilo "publicación de canal de WhatsApp" usando **fuentes reales de noticias** (RSS feeds + APIs).
 
 ## Características
 
-- **5 Temáticas disponibles**: Deportes, Liga Argentina, Cine, Series, Sistemas IPTV
+- **✅ FUENTES REALES**: Obtiene noticias de feeds RSS y APIs reales
+- **4 Temáticas**: Deportes, Liga Argentina, Cine, Series
 - **Generación automática**: 3 textos únicos por ejecución
-- **Textos variados**: Nunca se repite el mismo formato
-- **Incluye emojis**: Emojis contextuales según la temática
-- **100% local**: No requiere APIs externas ni conexión a internet
-- **Salida dual**: Muestra en consola y guarda en archivo `.txt`
+- **RSS Feeds Públicos**: ESPN, TyC Sports, Olé, NYT, SensaCine
+- **NewsAPI (opcional)**: Soporte para NewsAPI con 100 requests/día gratis
+- **Fallback inteligente**: Si las APIs fallan, usa generación sintética
+- **Caché integrado**: Reduce llamadas a APIs (1 hora)
+- **100% código abierto**: Sin dependencias pagas
 
 ## Requisitos
 
 - Node.js 16 o superior
+- Conexión a internet (para obtener noticias)
 
 ## Instalación
 
-1. Clona o descarga este repositorio
-2. Navega a la carpeta del proyecto:
+### 1. Clonar o descargar el proyecto
 
 ```bash
+git clone https://github.com/richard-dl/herramienta_canal.git
 cd herramienta_canal
+git checkout claude/whatsapp-text-generator-01UZ4JGx5t334NRSFMBHwrrj
 ```
 
-3. Instala las dependencias (no hay dependencias externas, pero es buena práctica):
+### 2. Instalar dependencias
 
 ```bash
 npm install
 ```
 
+Esto instalará:
+- `axios`: Cliente HTTP para APIs
+- `rss-parser`: Parser de feeds RSS
+- `dotenv`: Manejo de variables de entorno
+
+### 3. Configuración (Opcional pero Recomendado)
+
+#### Opción A: Sin API Key (Solo RSS)
+
+Funciona inmediatamente usando solo feeds RSS públicos. No necesitas configurar nada.
+
+```bash
+npm start
+```
+
+#### Opción B: Con NewsAPI (Recomendado)
+
+Para obtener más variedad de noticias:
+
+1. **Registrate gratis** en [NewsAPI.org](https://newsapi.org/)
+   - Plan gratuito: 100 requests/día
+   - No requiere tarjeta de crédito
+
+2. **Copia tu API key**
+
+3. **Crea un archivo `.env`** en la raíz del proyecto:
+
+```bash
+cp .env.example .env
+```
+
+4. **Edita `.env`** y agrega tu API key:
+
+```env
+NEWS_API_KEY=tu_api_key_aqui
+```
+
 ## Uso
 
-### Opción 1: Con npm (recomendado)
+### Generar textos
 
 ```bash
 npm start
@@ -41,136 +82,184 @@ npm start
 o
 
 ```bash
-npm run generate
+node main.js
 ```
 
-### Opción 2: Directamente con Node
+### Ejemplo de Salida
 
-```bash
-node main.js
+```
+╔════════════════════════════════════════════════════════════╗
+║   GENERADOR DE TEXTOS PARA CANAL DE WHATSAPP              ║
+║          CON FUENTES REALES (RSS + APIs)                  ║
+╚════════════════════════════════════════════════════════════╝
+
+📅 Fecha: 17 de noviembre de 2025
+🎯 Generando 3 textos desde fuentes reales...
+
+📡 Buscando noticia real de deportes...
+✓ Noticia real obtenida de ESPN
+📡 Buscando noticia real de ligaArgentina...
+✓ Noticia real obtenida de TyC Sports
+📡 Buscando noticia real de cine...
+✓ Noticia real obtenida de NYT Movies
+
+============================================================
+📝 TEXTO #1
+🏷️  TEMA: Deportes
+============================================================
+⚽ Manchester City empató 1-1 ante Liverpool en un partido
+emocionante en el Etihad. Haaland abrió el marcador pero
+Salah igualó en el segundo tiempo. 🔥
+
+   📰 Fuente: ESPN
+   📌 Tipo: ✓ Noticia Real
+
+============================================================
 ```
 
 ## Estructura del Proyecto
 
 ```
 herramienta_canal/
-├── main.js                 # Punto de entrada principal
-├── package.json            # Configuración del proyecto
-├── README.md              # Documentación
+├── main.js                      # Punto de entrada principal
+├── config.js                    # Configuración de APIs y RSS
+├── package.json                 # Dependencias
+├── .env.example                 # Ejemplo de configuración
+├── README.md                    # Documentación
 ├── src/
-│   ├── generador.js       # Motor de generación de textos
-│   ├── temas.js           # Datos y plantillas por temática
+│   ├── generador.js            # Generador sintético (fallback)
+│   ├── generadorReal.js        # Generador con fuentes reales
+│   ├── temas.js                # Datos y plantillas
+│   ├── apis/
+│   │   ├── rssParser.js        # Parser de feeds RSS
+│   │   └── newsApi.js          # Cliente NewsAPI
 │   └── utils/
-│       └── formatter.js   # Utilidades de formato y emojis
-└── output/                # Carpeta con archivos de salida
-    └── textos_YYYY-MM-DD_HH-MM-SS.txt
+│       └── formatter.js        # Utilidades de formato
+└── output/                      # Archivos generados
 ```
 
-## Temáticas Incluidas
+## Fuentes de Noticias Configuradas
 
-### 1. Deportes
-Noticias sobre fútbol internacional, fichajes, competiciones europeas y jugadores destacados.
+### Deportes
+- ESPN Argentina
+- TyC Sports
+- Diario Olé
 
-### 2. Liga Argentina
-Actualidad del fútbol argentino: Boca, River, Racing, competiciones locales y Libertadores.
+### Liga Argentina
+- TyC Sports
+- Olé - Fútbol Argentino
 
-### 3. Cine
-Estrenos, taquilla, actores, directores y películas destacadas.
+### Cine
+- New York Times - Movies
+- SensaCine
 
-### 4. Series
-Plataformas de streaming, series populares, renovaciones y nuevos lanzamientos.
+### Series
+- New York Times - Television
 
-### 5. Sistemas IPTV
-Servicios IPTV, características, deportes en vivo y contenido disponible.
+**Todas estas fuentes son públicas y no requieren API key.**
 
-## Ejemplo de Salida
+## Configuración Avanzada
 
-```
-============================================================
-📝 TEXTO #1
-🏷️  TEMA: Liga Argentina
-============================================================
-⚽ Boca Juniors sacó un histórico triunfo ante Racing en La Bombonera.
-Cavani marcó el gol del partido y se llevó todos los aplausos. 🏆
-============================================================
+### Modificar Cantidad de Textos
 
-============================================================
-📝 TEXTO #2
-🏷️  TEMA: Cine
-============================================================
-🎬 ¡Confirmado! Christopher Nolan dirigirá la nueva película de suspenso
-protagonizada por Timothée Chalamet. El estreno será el próximo año
-y promete ser impresionante. 🔥
-============================================================
-
-============================================================
-📝 TEXTO #3
-🏷️  TEMA: Series
-============================================================
-📺 Estreno destacado en Netflix: The Last of Us llega con todo.
-Drama brillante que promete ser el hit del mes. ¡No te la pierdas! ⭐
-============================================================
-```
-
-## Personalización
-
-### Agregar Nuevos Temas
-
-Edita `src/temas.js` y agrega un nuevo objeto con la estructura:
+Edita `main.js` línea 16:
 
 ```javascript
-nuevoTema: {
-  nombre: 'Nombre del Tema',
-  emojis: ['🎯', '⚡', '🔥'],
-  // Datos específicos del tema
-  equipos: [...],
-  jugadores: [...],
-  // Plantillas de texto
-  plantillas: [
-    'Plantilla 1 con {placeholder}',
-    'Plantilla 2 con {otroPlaceholder}'
-  ]
+const CANTIDAD_TEXTOS = 5; // Cambia de 3 a lo que quieras
+```
+
+### Agregar Nuevas Fuentes RSS
+
+Edita `config.js` y agrega URLs a `rssSources`:
+
+```javascript
+deportes: [
+  'https://www.espn.com.ar/rss/futbol/news',
+  'https://tu-nueva-fuente.com/rss' // Agregar aquí
+]
+```
+
+### Deshabilitar Fallback Sintético
+
+Si solo quieres noticias reales (sin fallback):
+
+Edita `config.js`:
+
+```javascript
+useFallback: false // Cambia de true a false
+```
+
+## Caché
+
+La herramienta usa un sistema de caché en memoria:
+- **Duración**: 1 hora
+- **Ventaja**: Reduce llamadas a APIs
+- **Límite**: Se reinicia al cerrar el programa
+
+Para modificar la duración, edita `config.js`:
+
+```javascript
+cache: {
+  enabled: true,
+  duration: 7200000 // 2 horas en milisegundos
 }
-```
-
-### Cambiar Cantidad de Textos
-
-Edita la constante en `main.js`:
-
-```javascript
-const CANTIDAD_TEXTOS = 5; // Genera 5 textos en lugar de 3
 ```
 
 ## Características Técnicas
 
-- **Módulos ES6**: Código moderno con imports/exports
-- **Sin dependencias**: No requiere paquetes externos
-- **Generación aleatoria inteligente**: Evita repeticiones
-- **Sistema de plantillas**: Flexible y expandible
-- **Salida formateada**: Archivos .txt bien estructurados
-- **Cross-platform**: Funciona en Windows, macOS y Linux
+- **Async/Await**: Manejo moderno de promesas
+- **Parallel Fetching**: Obtiene noticias de múltiples fuentes en paralelo
+- **Error Handling**: Manejo robusto de errores
+- **Fallback System**: Nunca falla, siempre genera contenido
+- **Clean Text**: Limpia HTML y caracteres especiales
+- **Cross-platform**: Windows, macOS, Linux
 
-## Ventajas
+## Ventajas vs Versión Sintética
 
-- **100% Offline**: No necesita internet
-- **Rápido**: Genera textos en segundos
-- **Ligero**: Sin dependencias pesadas
-- **Personalizable**: Fácil de modificar y expandir
-- **Profesional**: Código limpio y comentado
+| Característica | Versión Sintética | Con Fuentes Reales |
+|---|---|---|
+| Noticias reales | ❌ | ✅ |
+| Conexión a internet | No necesita | Necesita |
+| Velocidad | Instantáneo | 2-5 segundos |
+| Variedad | Limitada | Infinita |
+| Links a fuentes | ❌ | ✅ |
+| Requiere setup | ❌ | Mínimo (opcional) |
 
 ## Solución de Problemas
 
 ### Error: "Cannot find module"
 
-Asegúrate de estar en la carpeta correcta del proyecto.
+```bash
+npm install
+```
 
-### Los textos se repiten
+### No se obtienen noticias reales
 
-La herramienta genera textos aleatorios cada vez. Si ejecutas muchas veces, puede haber similitudes, pero nunca serán idénticos gracias al sistema de variación.
+Verifica tu conexión a internet y revisa que los feeds RSS estén disponibles.
 
-### Permisos de escritura
+### Error 401 en NewsAPI
 
-Si tienes problemas creando archivos, verifica los permisos de la carpeta `output/`.
+API key inválida. Verifica tu `.env` file.
+
+### Error 429 en NewsAPI
+
+Límite de requests excedido (100/día en plan gratuito). La herramienta usará solo RSS hasta mañana.
+
+## Limitaciones
+
+- **Plan gratuito NewsAPI**: 100 requests/día
+- **RSS feeds**: Dependen de disponibilidad de terceros
+- **Idioma**: Principalmente español (configurable)
+- **Categorías**: Limitadas a las fuentes configuradas
+
+## Próximas Mejoras
+
+- [ ] Integración con más APIs de noticias
+- [ ] Soporte para más idiomas
+- [ ] Sistema de programación (cron jobs)
+- [ ] Envío automático a WhatsApp Business API
+- [ ] Base de datos para historial
+- [ ] Dashboard web
 
 ## Licencia
 
@@ -178,8 +267,30 @@ MIT
 
 ## Autor
 
-Desarrollado para automatizar la creación de contenido para canales de WhatsApp.
+Desarrollado para automatizar la creación de contenido real para canales de WhatsApp.
 
 ---
 
-**Nota**: Esta herramienta genera textos de manera local sin utilizar APIs externas. Los textos son creados mediante un sistema de plantillas y combinaciones aleatorias.
+**Nota Importante**: Esta herramienta obtiene noticias de fuentes públicas mediante RSS feeds y APIs. Siempre verifica la precisión de la información antes de compartirla. Los textos son reales pero se reformatean para estilo WhatsApp.
+
+## Preguntas Frecuentes
+
+### ¿Es gratis?
+
+Sí, 100% gratis. NewsAPI tiene un plan gratuito de 100 requests/día.
+
+### ¿Necesito tarjeta de crédito?
+
+No. NewsAPI free tier no requiere tarjeta.
+
+### ¿Funciona sin NewsAPI?
+
+Sí, usa feeds RSS públicos sin necesidad de registro.
+
+### ¿Puedo comercializar el contenido?
+
+Verifica los términos de uso de cada fuente RSS que uses.
+
+### ¿Los textos son 100% reales?
+
+Se basan en noticias reales pero se reformatean para ser concisos y agregar emojis.
