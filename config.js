@@ -31,22 +31,16 @@ export const config = {
       // Google News Deportes (Argentina) - Últimas 48 horas
       'https://news.google.com/rss/search?q=deportes+fútbol+argentina&hl=es&gl=AR&when=2d',
       'https://news.google.com/rss/search?q=champions+league+premier&hl=es&gl=AR&when=2d',
-      // Medios deportivos argentinos
+      // Medios deportivos argentinos que funcionan
       'https://www.ole.com.ar/rss/ultimas-noticias/',
-      'https://www.tycsports.com/rss.xml',
-      'https://www.espn.com.ar/rss/futbol/news',
-      'https://www.lanacion.com.ar/deportes/rss',
-      'https://www.clarin.com/rss/deportes/',
-      'https://www.infobae.com/deportes/feed/'
+      'https://www.clarin.com/rss/deportes/'
     ],
     ligaArgentina: [
       // Google News Liga Argentina - Últimas 48 horas
       'https://news.google.com/rss/search?q=boca+river+racing&hl=es&gl=AR&when=2d',
       'https://news.google.com/rss/search?q=liga+profesional+argentina&hl=es&gl=AR&when=2d',
-      // Medios especializados argentinos
-      'https://www.ole.com.ar/rss/futbol-argentino/',
-      'https://www.tycsports.com/rss.xml',
-      'https://www.lanacion.com.ar/deportes/futbol/rss',
+      // Medios especializados argentinos que funcionan
+      'https://www.ole.com.ar/rss/ultimas-noticias/',
       'https://www.clarin.com/rss/lo-ultimo/'
     ],
     cine: [
@@ -63,10 +57,8 @@ export const config = {
       'https://rss.nytimes.com/services/xml/rss/nyt/Television.xml'
     ],
     iptv: [
-      // Reddit IPTV - Requiere User-Agent personalizado
+      // Reddit IPTV - Solo las que funcionan
       'https://www.reddit.com/user/iptvx/.rss',
-      'https://www.reddit.com/user/IPTVNation/.rss',
-      'https://www.reddit.com/user/SmartersProPTV/.rss',
       'https://www.reddit.com/user/techsupport/.rss',
       // Google News IPTV - Últimas 48 horas
       'https://news.google.com/rss/search?q=iptv+streaming&hl=es&gl=AR&when=2d'
