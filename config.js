@@ -28,19 +28,31 @@ export const config = {
   // Feeds RSS públicos (no requieren API key)
   rssSources: {
     deportes: [
+      // Google News Deportes (Argentina)
+      'https://news.google.com/rss/search?q=deportes+fútbol&hl=es-419&gl=AR&ceid=AR:es-419',
+      // Fuentes tradicionales
       'https://www.espn.com.ar/rss/futbol/news',
       'https://www.tycsports.com/rss.xml',
       'https://www.ole.com.ar/rss/ultimas-noticias/'
     ],
     ligaArgentina: [
+      // Google News Liga Argentina
+      'https://news.google.com/rss/search?q=boca+river+racing+liga+argentina&hl=es-419&gl=AR&ceid=AR:es-419',
+      // Fuentes tradicionales
       'https://www.tycsports.com/rss.xml',
       'https://www.ole.com.ar/rss/futbol-argentino/'
     ],
     cine: [
+      // Google News Cine/Películas
+      'https://news.google.com/rss/search?q=cine+películas+estreno&hl=es-419&gl=AR&ceid=AR:es-419',
+      // Fuentes tradicionales
       'https://rss.nytimes.com/services/xml/rss/nyt/Movies.xml',
       'https://www.sensacine.com/rss/noticias.xml'
     ],
     series: [
+      // Google News Series/Streaming
+      'https://news.google.com/rss/search?q=series+netflix+streaming&hl=es-419&gl=AR&ceid=AR:es-419',
+      // Fuentes tradicionales
       'https://rss.nytimes.com/services/xml/rss/nyt/Television.xml'
     ],
     tecnologia: [

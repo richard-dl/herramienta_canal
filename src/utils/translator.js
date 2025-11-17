@@ -15,11 +15,14 @@ export function esIngles(texto) {
     'was', 'were', 'been', 'being', 'about', 'against', 'between', 'into',
     'through', 'during', 'before', 'after', 'above', 'below', 'under', 'again',
     'further', 'then', 'once', 'here', 'only', 'own', 'same', 'than', 'too',
-    'very', 'can', 'just', 'should', 'now'
+    'very', 'can', 'just', 'should', 'now', 'said', 'says', 'new', 'news',
+    'today', 'tomorrow', 'week', 'month', 'year', 'latest', 'released', 'upcoming'
   ];
 
   const textoLower = texto.toLowerCase();
-  const palabras = textoLower.split(/\s+/);
+  const palabras = textoLower.split(/\s+/).filter(p => p.length > 2);
+
+  if (palabras.length === 0) return false;
 
   // Contar cuántas palabras en inglés encontramos
   let contadorIngles = 0;
@@ -30,8 +33,15 @@ export function esIngles(texto) {
     }
   });
 
-  // Si más del 20% son palabras en inglés, consideramos que el texto está en inglés
-  return (contadorIngles / palabras.length) > 0.2;
+  const porcentaje = (contadorIngles / palabras.length);
+
+  // Debug: mostrar detección
+  if (contadorIngles > 0) {
+    console.log(`   🔍 Detectadas ${contadorIngles}/${palabras.length} palabras en inglés (${Math.round(porcentaje * 100)}%)`);
+  }
+
+  // Si más del 15% son palabras en inglés (bajado de 20%), consideramos que el texto está en inglés
+  return porcentaje > 0.15;
 }
 
 /**
@@ -155,9 +165,26 @@ export async function traducirSiEsNecesario(texto) {
   // Detectar si está en inglés
   if (esIngles(texto)) {
     console.log('   🌐 Texto en inglés detectado, traduciendo...');
-    const traduccion = await traducirTexto(texto);
-    console.log('   ✓ Texto traducido al español');
-    return traduccion;
+
+    try {
+      // Intentar traducción con API primero
+      const traduccion = await traducirTexto(texto);
+
+      // Verificar que la traducción sea válida
+      if (traduccion && traduccion !== texto && traduccion.length > 10) {
+        console.log('   ✓ Texto traducido con API');
+        return traduccion;
+      } else {
+        // Si la API no funcionó bien, usar traducción manual
+        console.log('   → Usando traducción manual de palabras clave');
+        const traduccionManual = traducirManual(texto);
+        return traduccionManual;
+      }
+    } catch (error) {
+      // Si falla completamente, usar traducción manual
+      console.log('   ⚠️  API falló, usando traducción manual');
+      return traducirManual(texto);
+    }
   }
 
   // Si ya está en español, devolver tal cual
