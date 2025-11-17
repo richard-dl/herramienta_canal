@@ -64,6 +64,7 @@ async function convertirNoticiaATexto(noticia, categoria) {
     texto: texto,
     fuente: noticia.fuente,
     link: noticia.link,
+    imagen: noticia.imagen || null, // Incluir imagen si está disponible
     esReal: true
   };
 }

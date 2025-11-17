@@ -56,6 +56,9 @@ function guardarEnArchivo(textos, usandoFuentesReales = false) {
     if (item.link) {
       contenido += `\nLink: ${item.link}\n`;
     }
+    if (item.imagen) {
+      contenido += `Imagen: ${item.imagen}\n`;
+    }
     contenido += `\n`;
   });
 
@@ -103,6 +106,9 @@ async function main() {
       if (item.esReal !== undefined) {
         const tipo = item.esReal ? '✓ Noticia Real' : '⚠ Generado Sintéticamente';
         console.log(`   📌 Tipo: ${tipo}`);
+      }
+      if (item.imagen) {
+        console.log(`   🖼️  Imagen: ${item.imagen}`);
       }
       console.log('');
     });

@@ -68,7 +68,8 @@ export async function obtenerNoticiasPorCategoria(categoria) {
       descripcion: item.contentSnippet || item.description || '',
       link: item.link || '',
       fecha: item.pubDate || item.isoDate || new Date().toISOString(),
-      fuente: item.creator || 'Fuente externa'
+      fuente: item.creator || 'Fuente externa',
+      imagen: extraerImagen(item) // Extraer imagen de la noticia
     }))
     .slice(0, 20); // Limitar a 20 noticias más recientes
 
@@ -93,6 +94,51 @@ export async function obtenerNoticiaAleatoria(categoria) {
 
   const indice = Math.floor(Math.random() * noticias.length);
   return noticias[indice];
+}
+
+/**
+ * Extrae la URL de imagen de un item RSS
+ */
+function extraerImagen(item) {
+  // Intentar varias fuentes de imagen en orden de preferencia
+
+  // 1. Media RSS (usado por muchos feeds de noticias)
+  if (item['media:content'] && item['media:content'].$ && item['media:content'].$.url) {
+    return item['media:content'].$.url;
+  }
+
+  if (item['media:thumbnail'] && item['media:thumbnail'].$ && item['media:thumbnail'].$.url) {
+    return item['media:thumbnail'].$.url;
+  }
+
+  // 2. Enclosure (común en podcasts y feeds con imágenes)
+  if (item.enclosure && item.enclosure.url) {
+    const url = item.enclosure.url;
+    // Verificar que sea una imagen
+    if (/\.(jpg|jpeg|png|gif|webp)/i.test(url)) {
+      return url;
+    }
+  }
+
+  // 3. Buscar en el contenido HTML
+  if (item.content || item['content:encoded']) {
+    const content = item.content || item['content:encoded'];
+    const imgMatch = content.match(/<img[^>]+src=["']([^"']+)["']/i);
+    if (imgMatch && imgMatch[1]) {
+      return imgMatch[1];
+    }
+  }
+
+  // 4. Buscar en la descripción
+  if (item.description) {
+    const imgMatch = item.description.match(/<img[^>]+src=["']([^"']+)["']/i);
+    if (imgMatch && imgMatch[1]) {
+      return imgMatch[1];
+    }
+  }
+
+  // No se encontró imagen
+  return null;
 }
 
 /**
