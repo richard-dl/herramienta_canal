@@ -14,7 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Configuración
-const CANTIDAD_TEXTOS = 3;
+const CANTIDAD_TEXTOS = 5;
 const CARPETA_OUTPUT = path.join(__dirname, 'output');
 
 /**

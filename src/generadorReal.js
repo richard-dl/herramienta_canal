@@ -6,13 +6,14 @@ import { obtenerPartidoAleatorio, formatearPartidoParaWhatsApp, LIGAS } from './
 import { obtenerEventoAleatorio, formatearEventoParaWhatsApp, LIGAS_SPORTSDB } from './apis/sportsDbApi.js';
 import { generarTexto as generarTextoSintetico } from './generador.js';
 import { agregarEmojis } from './utils/formatter.js';
+import { traducirSiEsNecesario } from './utils/translator.js';
 import { temas } from './temas.js';
 import { config } from '../config.js';
 
 /**
  * Convierte una noticia real en texto estilo WhatsApp
  */
-function convertirNoticiaATexto(noticia, categoria) {
+async function convertirNoticiaATexto(noticia, categoria) {
   if (!noticia) return null;
 
   const tema = temas[categoria];
@@ -49,6 +50,9 @@ function convertirNoticiaATexto(noticia, categoria) {
   if (texto.length > 280) {
     texto = texto.substring(0, 277) + '...';
   }
+
+  // Traducir a español si está en otro idioma
+  texto = await traducirSiEsNecesario(texto);
 
   // Agregar emojis contextualmente
   if (tema && tema.emojis) {
@@ -135,7 +139,7 @@ export async function generarTextoReal(nombreTema) {
 
     // Si tenemos noticia, convertirla
     if (noticia) {
-      const textoGenerado = convertirNoticiaATexto(noticia, nombreTema);
+      const textoGenerado = await convertirNoticiaATexto(noticia, nombreTema);
       if (textoGenerado && textoGenerado.texto) {
         console.log(`✓ Noticia real obtenida de ${noticia.fuente}`);
         return textoGenerado;

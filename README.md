@@ -10,7 +10,8 @@ Herramienta automática que genera textos originales y atractivos estilo "public
   - **TheSportsDB** (100% GRATUITA) - Fuente principal
   - **API-Football** (Ya configurada)
   - **NewsAPI** (Opcional)
-- **Generación automática**: 3 textos únicos por ejecución
+- **Generación automática**: 5 textos únicos por ejecución
+- **🌐 Traducción automática**: Detecta y traduce textos en inglés a español
 - **RSS Feeds Públicos**: ESPN, TyC Sports, Olé, NYT, SensaCine
 - **Fallback inteligente**: Si las APIs fallan, usa generación sintética
 - **Caché integrado**: Reduce llamadas a APIs (1 hora)
@@ -192,11 +193,28 @@ herramienta_canal/
 
 ### Modificar Cantidad de Textos
 
-Edita `main.js` línea 16:
+Edita `main.js` línea 17:
 
 ```javascript
-const CANTIDAD_TEXTOS = 5; // Cambia de 3 a lo que quieras
+const CANTIDAD_TEXTOS = 5; // Cambia de 5 a lo que quieras
 ```
+
+### Traducción Automática
+
+La herramienta incluye traducción automática de inglés a español:
+
+- **Detección automática**: Analiza el texto y detecta si está en inglés
+- **API de traducción gratuita**: Usa MyMemory Translation API (10,000 palabras/día gratis)
+- **Fallback manual**: Si la API falla, traduce palabras clave comunes
+- **Sin configuración**: Funciona automáticamente, no requiere setup
+
+**Cómo funciona:**
+1. El texto se obtiene de la fuente (RSS/API)
+2. Se detecta automáticamente si está en inglés
+3. Si está en inglés, se traduce a español
+4. Se agregan emojis y formato final
+
+**Archivo**: `src/utils/translator.js`
 
 ### Agregar Nuevas Fuentes RSS
 
@@ -240,18 +258,21 @@ cache: {
 - **Async/Await**: Manejo moderno de promesas
 - **Parallel Fetching**: Obtiene noticias de múltiples fuentes en paralelo
 - **Error Handling**: Manejo robusto de errores
+- **Traducción automática**: Detección y traducción de inglés a español
 - **Fallback System**: Nunca falla, siempre genera contenido
 - **Clean Text**: Limpia HTML y caracteres especiales
 - **Cross-platform**: Windows, macOS, Linux
 
 ## Ventajas vs Versión Sintética
 
-| Característica | Versión Sintética | Con Fuentes Reales (v2.0) |
+| Característica | Versión Sintética | Con Fuentes Reales (v2.1) |
 |---|---|---|
 | Noticias reales | ❌ | ✅ (3 APIs deportivas) |
+| Cantidad de textos | 3 | 5 |
+| Traducción automática | ❌ | ✅ Inglés → Español |
 | APIs gratuitas | N/A | ✅ TheSportsDB 100% gratis |
 | Conexión a internet | No necesita | Necesita |
-| Velocidad | Instantáneo | 2-5 segundos |
+| Velocidad | Instantáneo | 3-7 segundos |
 | Variedad | Limitada | Infinita |
 | Links a fuentes | ❌ | ✅ |
 | Próximos eventos | ❌ | ✅ Con fechas reales |
