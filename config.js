@@ -57,11 +57,17 @@ export const config = {
       'https://rss.nytimes.com/services/xml/rss/nyt/Television.xml'
     ],
     iptv: [
-      // Reddit IPTV - Solo las que funcionan
-      'https://www.reddit.com/user/iptvx/.rss',
-      'https://www.reddit.com/user/techsupport/.rss',
       // Google News IPTV - Últimas 48 horas
-      'https://news.google.com/rss/search?q=iptv+streaming&hl=es&gl=AR&when=2d'
+      'https://news.google.com/rss/search?q=iptv+streaming&hl=es&gl=AR&when=2d',
+      // Fuentes especializadas en IPTV (de FeedSpot Top 40)
+      'https://troypoint.com/category/iptv/feed/',
+      'https://iptvthefox.com/feed/',
+      'https://iptvgateway.com/feed/',
+      'https://tv4one.com/feed/',
+      // Streaming Media Global - Noticias de la industria
+      'http://feeds.infotoday.com/StreamingMediaGlobal-IndustryNews',
+      // Segu-Info - Ciberseguridad y piratería IPTV
+      'https://blog.segu-info.com.ar/feeds/posts/default'
     ],
     tecnologia: [
       'https://www.wired.com/feed/rss'
