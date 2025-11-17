@@ -2,8 +2,6 @@
 
 import { obtenerNoticiaAleatoria, limpiarTexto } from './apis/rssParser.js';
 import { obtenerNoticiasNewsAPI } from './apis/newsApi.js';
-import { obtenerPartidoAleatorio, formatearPartidoParaWhatsApp, LIGAS } from './apis/footballApi.js';
-import { obtenerEventoAleatorio, formatearEventoParaWhatsApp, LIGAS_SPORTSDB } from './apis/sportsDbApi.js';
 import { generarTexto as generarTextoSintetico } from './generador.js';
 import { agregarEmojis } from './utils/formatter.js';
 import { traducirSiEsNecesario } from './utils/translator.js';
@@ -75,63 +73,11 @@ async function convertirNoticiaATexto(noticia, categoria) {
 }
 
 /**
- * Genera un texto usando fuentes reales
+ * Genera un texto usando fuentes reales (RSS + NewsAPI)
  */
 export async function generarTextoReal(nombreTema) {
   try {
-    // Para deportes y liga argentina, usar TheSportsDB (100% gratuita)
-    if (nombreTema === 'deportes' || nombreTema === 'ligaArgentina') {
-      console.log(`⚽ Buscando próximo evento de ${nombreTema}...`);
-
-      // Usar TheSportsDB como fuente principal
-      const ligaSportsDB = nombreTema === 'ligaArgentina'
-        ? LIGAS_SPORTSDB.LIGA_ARGENTINA
-        : LIGAS_SPORTSDB.CHAMPIONS_LEAGUE;
-
-      let evento = await obtenerEventoAleatorio(ligaSportsDB);
-
-      // Si TheSportsDB falla, intentar con API-Football como backup
-      if (!evento && config.footballApi.apiKey) {
-        console.log(`   → Intentando con API-Football...`);
-        const ligaFootball = nombreTema === 'ligaArgentina' ? LIGAS.LIGA_ARGENTINA : LIGAS.CHAMPIONS;
-        const partido = await obtenerPartidoAleatorio(ligaFootball);
-
-        if (partido) {
-          const tema = temas[nombreTema];
-          const texto = formatearPartidoParaWhatsApp(partido, tema?.emojis || []);
-
-          if (texto) {
-            console.log(`✓ Partido real obtenido de API-Football`);
-            return {
-              tema: tema ? tema.nombre : nombreTema,
-              texto: texto,
-              fuente: 'API-Football (datos reales)',
-              link: `https://www.api-football.com/`,
-              esReal: true
-            };
-          }
-        }
-      }
-
-      // Si tenemos evento de TheSportsDB
-      if (evento) {
-        const tema = temas[nombreTema];
-        const texto = formatearEventoParaWhatsApp(evento, tema?.emojis || []);
-
-        if (texto) {
-          console.log(`✓ Evento real obtenido de TheSportsDB`);
-          return {
-            tema: tema ? tema.nombre : nombreTema,
-            texto: texto,
-            fuente: 'TheSportsDB (100% gratuita)',
-            link: `https://www.thesportsdb.com/`,
-            esReal: true
-          };
-        }
-      }
-    }
-
-    // Para otras categorías, intentar obtener noticia de RSS
+    // Intentar obtener noticia de RSS (fuente principal)
     console.log(`📡 Buscando noticia real de ${nombreTema}...`);
     let noticia = await obtenerNoticiaAleatoria(nombreTema);
 
