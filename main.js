@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 import { generarTextosVariados } from './src/generador.js';
 import { generarTextosReales } from './src/generadorReal.js';
 import { formatearOutput, obtenerFechaActual, separador } from './src/utils/formatter.js';
+import { temas } from './src/temas.js';
 
 // Obtener __dirname en módulos ES
 const __filename = fileURLToPath(import.meta.url);
@@ -16,6 +17,29 @@ const __dirname = path.dirname(__filename);
 // Configuración
 const CANTIDAD_TEXTOS = 5;
 const CARPETA_OUTPUT = path.join(__dirname, 'output');
+
+/**
+ * Obtiene el emoji principal de un tema
+ */
+function obtenerEmojiTema(nombreTema) {
+  const temaNormalizado = nombreTema.toLowerCase().replace(/\s+/g, '');
+
+  // Mapeo de nombres posibles a claves de temas
+  const mapeo = {
+    'deportes': 'deportes',
+    'ligaargentina': 'ligaArgentina',
+    'cine': 'cine',
+    'series': 'series',
+    'iptv': 'iptv',
+    'sistemasiptv': 'iptv',
+    'tecnologia': 'iptv' // fallback
+  };
+
+  const claveTema = mapeo[temaNormalizado] || 'deportes';
+  const tema = temas[claveTema];
+
+  return tema && tema.emojis && tema.emojis.length > 0 ? tema.emojis[0] : '📌';
+}
 
 /**
  * Asegura que exista la carpeta de salida
@@ -43,21 +67,25 @@ function guardarEnArchivo(textos, usandoFuentesReales = false) {
   contenido += `${'='.repeat(70)}\n\n`;
 
   textos.forEach((item, index) => {
-    contenido += `${'─'.repeat(70)}\n`;
-    contenido += `TEXTO #${index + 1} - TEMA: ${item.tema}\n`;
-    if (item.fuente) {
-      contenido += `FUENTE: ${item.fuente}\n`;
+    contenido += `${'═'.repeat(70)}\n\n`;
+    contenido += `TEXTO #${index + 1}\n`;
+    contenido += `${obtenerEmojiTema(item.tema)} ${item.tema.toUpperCase()}\n`;
+    if (item.titulo) {
+      contenido += `📰 ${item.titulo}\n`;
     }
-    if (item.esReal !== undefined) {
-      contenido += `TIPO: ${item.esReal ? '✓ Noticia Real' : '⚠ Generado Sintéticamente'}\n`;
-    }
-    contenido += `${'─'.repeat(70)}\n`;
-    contenido += `${item.texto}\n`;
+    contenido += `\n${item.texto}\n\n`;
     if (item.link) {
-      contenido += `\nLink: ${item.link}\n`;
+      contenido += `🔗 Link: ${item.link}\n`;
+    }
+    if (item.fuente) {
+      contenido += `📺 Fuente: ${item.fuente}\n`;
     }
     if (item.imagen) {
-      contenido += `Imagen: ${item.imagen}\n`;
+      contenido += `🖼️  Imagen: ${item.imagen}\n`;
+    }
+    // Solo mostrar si es sintético
+    if (item.esReal === false) {
+      contenido += `⚠️  Generado Sintéticamente\n`;
     }
     contenido += `\n`;
   });
@@ -97,18 +125,27 @@ async function main() {
 
     // Mostrar en consola
     textos.forEach((item, index) => {
-      console.log(formatearOutput(index + 1, item.tema, item.texto));
-
-      // Mostrar info de fuente
-      if (item.fuente) {
-        console.log(`   📰 Fuente: ${item.fuente}`);
+      console.log('\n' + '═'.repeat(60));
+      console.log(`\n📝 TEXTO #${index + 1}`);
+      console.log(`${obtenerEmojiTema(item.tema)} ${item.tema.toUpperCase()}`);
+      if (item.titulo) {
+        console.log(`📰 ${item.titulo}`);
       }
-      if (item.esReal !== undefined) {
-        const tipo = item.esReal ? '✓ Noticia Real' : '⚠ Generado Sintéticamente';
-        console.log(`   📌 Tipo: ${tipo}`);
+      console.log('');
+      console.log(item.texto);
+      console.log('');
+      if (item.link) {
+        console.log(`🔗 Link: ${item.link}`);
+      }
+      if (item.fuente) {
+        console.log(`📺 Fuente: ${item.fuente}`);
       }
       if (item.imagen) {
-        console.log(`   🖼️  Imagen: ${item.imagen}`);
+        console.log(`🖼️  Imagen: ${item.imagen}`);
+      }
+      // Solo mostrar si es sintético
+      if (item.esReal === false) {
+        console.log(`⚠️  Generado Sintéticamente`);
       }
       console.log('');
     });

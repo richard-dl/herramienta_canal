@@ -61,6 +61,7 @@ async function convertirNoticiaATexto(noticia, categoria) {
 
   return {
     tema: tema ? tema.nombre : categoria,
+    titulo: noticia.titulo || null, // Título original de la noticia
     texto: texto,
     fuente: noticia.fuente,
     link: noticia.link,

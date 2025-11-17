@@ -64,11 +64,11 @@ export async function obtenerNoticiasPorCategoria(categoria) {
     .flat()
     .filter(item => item && item.title)
     .map(item => ({
-      titulo: item.title,
+      titulo: extraerTituloLimpio(item.title),
       descripcion: item.contentSnippet || item.description || '',
       link: item.link || '',
       fecha: item.pubDate || item.isoDate || new Date().toISOString(),
-      fuente: item.creator || 'Fuente externa',
+      fuente: extraerFuente(item),
       imagen: extraerImagen(item) // Extraer imagen de la noticia
     }))
     .slice(0, 20); // Limitar a 20 noticias más recientes
@@ -94,6 +94,47 @@ export async function obtenerNoticiaAleatoria(categoria) {
 
   const indice = Math.floor(Math.random() * noticias.length);
   return noticias[indice];
+}
+
+/**
+ * Extrae el nombre de la fuente del título de Google News
+ * Google News usa el formato: "Título - Nombre del Medio"
+ */
+function extraerFuente(item) {
+  // Intentar primero con el campo creator
+  if (item.creator && item.creator !== 'Google News') {
+    return item.creator;
+  }
+
+  // Si es de Google News, extraer del título
+  if (item.title) {
+    // Google News usa formato: "Título - Nombre del Medio"
+    const partes = item.title.split(' - ');
+    if (partes.length >= 2) {
+      // La última parte es el nombre del medio
+      const fuente = partes[partes.length - 1].trim();
+      // Limpiar caracteres especiales del final
+      return fuente.replace(/\s*\.\s*$/, '');
+    }
+  }
+
+  return 'Fuente externa';
+}
+
+/**
+ * Extrae el título limpio sin el nombre del medio
+ */
+function extraerTituloLimpio(titulo) {
+  if (!titulo) return '';
+
+  // Si viene de Google News (formato "Título - Medio"), quitar el medio
+  const partes = titulo.split(' - ');
+  if (partes.length >= 2) {
+    // Tomar todo excepto la última parte (que es el medio)
+    return partes.slice(0, -1).join(' - ').trim();
+  }
+
+  return titulo.trim();
 }
 
 /**
