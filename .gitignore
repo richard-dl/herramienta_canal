@@ -1,0 +1,21 @@
+# Node modules
+node_modules/
+
+# Archivos generados
+output/*.txt
+
+# Mantener la carpeta output pero no su contenido
+!output/.gitkeep
+
+# Logs
+*.log
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
