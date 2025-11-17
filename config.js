@@ -11,6 +11,13 @@ export const config = {
     baseUrl: 'https://v3.football.api-sports.io'
   },
 
+  // TheSportsDB - https://www.thesportsdb.com/
+  // 100% GRATUITA - Información completa de deportes
+  sportsDbApi: {
+    apiKey: process.env.SPORTSDB_API_KEY || '3', // API key gratuita
+    baseUrl: 'https://www.thesportsdb.com/api/v1/json'
+  },
+
   // NewsAPI - Registrate gratis en https://newsapi.org/
   // Plan gratuito: 100 requests/día
   newsApi: {

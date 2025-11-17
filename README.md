@@ -1,14 +1,17 @@
 # Generador de Textos para Canal de WhatsApp (CON FUENTES REALES)
 
-Herramienta automática que genera textos originales y atractivos estilo "publicación de canal de WhatsApp" usando **fuentes reales de noticias** (RSS feeds + APIs).
+Herramienta automática que genera textos originales y atractivos estilo "publicación de canal de WhatsApp" usando **fuentes reales de noticias** (RSS feeds + 3 APIs deportivas).
 
 ## Características
 
 - **✅ FUENTES REALES**: Obtiene noticias de feeds RSS y APIs reales
 - **4 Temáticas**: Deportes, Liga Argentina, Cine, Series
+- **3 APIs Deportivas Integradas**:
+  - **TheSportsDB** (100% GRATUITA) - Fuente principal
+  - **API-Football** (Ya configurada)
+  - **NewsAPI** (Opcional)
 - **Generación automática**: 3 textos únicos por ejecución
 - **RSS Feeds Públicos**: ESPN, TyC Sports, Olé, NYT, SensaCine
-- **NewsAPI (opcional)**: Soporte para NewsAPI con 100 requests/día gratis
 - **Fallback inteligente**: Si las APIs fallan, usa generación sintética
 - **Caché integrado**: Reduce llamadas a APIs (1 hora)
 - **100% código abierto**: Sin dependencias pagas
@@ -138,25 +141,52 @@ herramienta_canal/
 └── output/                      # Archivos generados
 ```
 
-## Fuentes de Noticias Configuradas
+## Fuentes de Datos Configuradas
 
-### Deportes
+### APIs Deportivas (Principales)
+
+#### TheSportsDB (⭐ Recomendada - 100% GRATUITA)
+- **URL**: https://www.thesportsdb.com/
+- **Gratis**: Sí, para siempre
+- **Límites**: Sin límites en plan gratuito
+- **Datos**: Próximos eventos, resultados, equipos, jugadores
+- **Ligas incluidas**:
+  - Liga Argentina, Champions League, Premier League
+  - La Liga, Serie A, Bundesliga, Ligue 1
+  - Copa Libertadores, Copa Sudamericana
+  - NBA, NFL, MLB, NHL, UFC, Fórmula 1
+- **Estado**: ✅ Ya configurada y lista para usar
+
+#### API-Football
+- **URL**: https://www.api-football.com/
+- **Tu API Key**: Ya incluida en el código
+- **Datos**: Partidos en tiempo real, estadísticas
+- **Estado**: ✅ Configurada como backup
+
+#### NewsAPI (Opcional)
+- **URL**: https://newsapi.org/
+- **Gratis**: 100 requests/día
+- **Estado**: Opcional, se puede agregar
+
+### RSS Feeds (Backup)
+
+#### Deportes
 - ESPN Argentina
 - TyC Sports
 - Diario Olé
 
-### Liga Argentina
+#### Liga Argentina
 - TyC Sports
 - Olé - Fútbol Argentino
 
-### Cine
+#### Cine
 - New York Times - Movies
 - SensaCine
 
-### Series
+#### Series
 - New York Times - Television
 
-**Todas estas fuentes son públicas y no requieren API key.**
+**Todas las fuentes RSS son públicas y no requieren API key.**
 
 ## Configuración Avanzada
 
@@ -216,13 +246,16 @@ cache: {
 
 ## Ventajas vs Versión Sintética
 
-| Característica | Versión Sintética | Con Fuentes Reales |
+| Característica | Versión Sintética | Con Fuentes Reales (v2.0) |
 |---|---|---|
-| Noticias reales | ❌ | ✅ |
+| Noticias reales | ❌ | ✅ (3 APIs deportivas) |
+| APIs gratuitas | N/A | ✅ TheSportsDB 100% gratis |
 | Conexión a internet | No necesita | Necesita |
 | Velocidad | Instantáneo | 2-5 segundos |
 | Variedad | Limitada | Infinita |
 | Links a fuentes | ❌ | ✅ |
+| Próximos eventos | ❌ | ✅ Con fechas reales |
+| Múltiples deportes | ❌ | ✅ (Fútbol, NBA, NFL, etc.) |
 | Requiere setup | ❌ | Mínimo (opcional) |
 
 ## Solución de Problemas
