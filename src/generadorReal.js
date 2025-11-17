@@ -7,6 +7,7 @@ import { obtenerEventoAleatorio, formatearEventoParaWhatsApp, LIGAS_SPORTSDB } f
 import { generarTexto as generarTextoSintetico } from './generador.js';
 import { agregarEmojis } from './utils/formatter.js';
 import { traducirSiEsNecesario } from './utils/translator.js';
+import { acortarURL } from './utils/urlShortener.js';
 import { temas } from './temas.js';
 import { config } from '../config.js';
 
@@ -59,12 +60,15 @@ async function convertirNoticiaATexto(noticia, categoria) {
     texto = agregarEmojis(texto, tema.emojis);
   }
 
+  // Acortar URL si es muy larga
+  const linkAcortado = noticia.link ? await acortarURL(noticia.link) : null;
+
   return {
     tema: tema ? tema.nombre : categoria,
     titulo: noticia.titulo || null, // Título original de la noticia
     texto: texto,
     fuente: noticia.fuente,
-    link: noticia.link,
+    link: linkAcortado,
     imagen: noticia.imagen || null, // Incluir imagen si está disponible
     esReal: true
   };
