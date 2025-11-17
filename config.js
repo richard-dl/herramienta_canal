@@ -28,9 +28,9 @@ export const config = {
   // Feeds RSS públicos (no requieren API key)
   rssSources: {
     deportes: [
-      // Google News Deportes (Argentina) - Principal
-      'https://news.google.com/rss/search?q=deportes+fútbol+argentina&hl=es&gl=AR',
-      'https://news.google.com/rss/search?q=champions+league+premier&hl=es&gl=AR',
+      // Google News Deportes (Argentina) - Últimas 48 horas
+      'https://news.google.com/rss/search?q=deportes+fútbol+argentina&hl=es&gl=AR&when=2d',
+      'https://news.google.com/rss/search?q=champions+league+premier&hl=es&gl=AR&when=2d',
       // Medios deportivos argentinos
       'https://www.ole.com.ar/rss/ultimas-noticias/',
       'https://www.tycsports.com/rss.xml',
@@ -40,9 +40,9 @@ export const config = {
       'https://www.infobae.com/deportes/feed/'
     ],
     ligaArgentina: [
-      // Google News Liga Argentina - Principal
-      'https://news.google.com/rss/search?q=boca+river+racing&hl=es&gl=AR',
-      'https://news.google.com/rss/search?q=liga+profesional+argentina&hl=es&gl=AR',
+      // Google News Liga Argentina - Últimas 48 horas
+      'https://news.google.com/rss/search?q=boca+river+racing&hl=es&gl=AR&when=2d',
+      'https://news.google.com/rss/search?q=liga+profesional+argentina&hl=es&gl=AR&when=2d',
       // Medios especializados argentinos
       'https://www.ole.com.ar/rss/futbol-argentino/',
       'https://www.tycsports.com/rss.xml',
@@ -50,15 +50,15 @@ export const config = {
       'https://www.clarin.com/rss/lo-ultimo/'
     ],
     cine: [
-      // Google News Cine - Simplificado
-      'https://news.google.com/rss/search?q=cine+películas&hl=es&gl=AR',
+      // Google News Cine - Últimas 48 horas
+      'https://news.google.com/rss/search?q=cine+películas&hl=es&gl=AR&when=2d',
       // Fuentes tradicionales
       'https://rss.nytimes.com/services/xml/rss/nyt/Movies.xml',
       'https://www.sensacine.com/rss/noticias.xml'
     ],
     series: [
-      // Google News Series - Simplificado
-      'https://news.google.com/rss/search?q=series+streaming&hl=es&gl=AR',
+      // Google News Series - Últimas 48 horas
+      'https://news.google.com/rss/search?q=series+streaming&hl=es&gl=AR&when=2d',
       // Fuentes tradicionales
       'https://rss.nytimes.com/services/xml/rss/nyt/Television.xml'
     ],
@@ -68,8 +68,8 @@ export const config = {
       'https://www.reddit.com/user/IPTVNation/.rss',
       'https://www.reddit.com/user/SmartersProPTV/.rss',
       'https://www.reddit.com/user/techsupport/.rss',
-      // Google News IPTV
-      'https://news.google.com/rss/search?q=iptv+streaming&hl=es&gl=AR'
+      // Google News IPTV - Últimas 48 horas
+      'https://news.google.com/rss/search?q=iptv+streaming&hl=es&gl=AR&when=2d'
     ],
     tecnologia: [
       'https://www.wired.com/feed/rss'

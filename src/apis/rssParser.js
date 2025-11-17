@@ -84,6 +84,12 @@ export async function obtenerNoticiasPorCategoria(categoria) {
       fuente: extraerFuente(item),
       imagen: extraerImagen(item) // Extraer imagen de la noticia
     }))
+    // Ordenar por fecha (más recientes primero)
+    .sort((a, b) => {
+      const fechaA = new Date(a.fecha);
+      const fechaB = new Date(b.fecha);
+      return fechaB - fechaA; // Descendente (más nuevo primero)
+    })
     .slice(0, 20); // Limitar a 20 noticias más recientes
 
   // Guardar en caché
