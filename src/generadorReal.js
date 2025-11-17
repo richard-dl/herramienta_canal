@@ -132,7 +132,7 @@ export async function generarTextoReal(nombreTema) {
  * Genera N textos usando fuentes reales
  */
 export async function generarTextosReales(cantidad = 3) {
-  const temasDisponibles = ['deportes', 'ligaArgentina', 'cine', 'series'];
+  const temasDisponibles = ['deportes', 'ligaArgentina', 'cine', 'series', 'iptv'];
   const textos = [];
 
   // Seleccionar temas aleatorios sin repetir

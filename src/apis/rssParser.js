@@ -3,10 +3,19 @@
 import Parser from 'rss-parser';
 import { config } from '../../config.js';
 
+// Parser general para la mayoría de feeds
 const parser = new Parser({
   timeout: 10000,
   headers: {
     'User-Agent': 'Mozilla/5.0 (compatible; NoticiasBot/1.0)'
+  }
+});
+
+// Parser específico para Reddit (requiere User-Agent personalizado)
+const redditParser = new Parser({
+  timeout: 10000,
+  headers: {
+    'User-Agent': 'HerramientaCanal/2.0 (RSS Reader para WhatsApp)'
   }
 });
 
@@ -21,7 +30,11 @@ const cache = {
  */
 async function fetchRSS(url) {
   try {
-    const feed = await parser.parseURL(url);
+    // Detectar si es una URL de Reddit
+    const esReddit = url.includes('reddit.com');
+    const parserAUsar = esReddit ? redditParser : parser;
+
+    const feed = await parserAUsar.parseURL(url);
     return feed.items || [];
   } catch (error) {
     console.error(`Error fetching RSS ${url}:`, error.message);

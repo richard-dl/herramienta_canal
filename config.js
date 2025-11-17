@@ -62,6 +62,15 @@ export const config = {
       // Fuentes tradicionales
       'https://rss.nytimes.com/services/xml/rss/nyt/Television.xml'
     ],
+    iptv: [
+      // Reddit IPTV - Requiere User-Agent personalizado
+      'https://www.reddit.com/user/iptvx/.rss',
+      'https://www.reddit.com/user/IPTVNation/.rss',
+      'https://www.reddit.com/user/SmartersProPTV/.rss',
+      'https://www.reddit.com/user/techsupport/.rss',
+      // Google News IPTV
+      'https://news.google.com/rss/search?q=iptv+streaming&hl=es&gl=AR'
+    ],
     tecnologia: [
       'https://www.wired.com/feed/rss'
     ]
