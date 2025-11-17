@@ -61,7 +61,6 @@ export const config = {
       'https://news.google.com/rss/search?q=iptv+streaming&hl=es&gl=AR&when=2d',
       // Fuentes especializadas en IPTV (de FeedSpot Top 40)
       'https://troypoint.com/category/iptv/feed/',
-      'https://iptvthefox.com/feed/',
       'https://iptvgateway.com/feed/',
       'https://tv4one.com/feed/',
       // Streaming Media Global - Noticias de la industria
