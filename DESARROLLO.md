@@ -1,6 +1,6 @@
 # Generador de Textos para Canal de WhatsApp
 
-## Desarrollo por Streampro & ClaudeCode
+## Desarrollo por Streampro 
 
 ---
 
@@ -413,7 +413,7 @@ https://rss.feedspot.com/iptv_rss_feeds/
 
 ## Créditos
 
-**Desarrollo:** Streampro & ClaudeCode
+**Desarrollo:** Streampro 
 **Fecha:** Noviembre 2025
 **Licencia:** Uso privado
 
